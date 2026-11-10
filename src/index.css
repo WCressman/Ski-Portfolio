@@ -1,0 +1,230 @@
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* The blurred side fill (body::after) is bigger than the page on purpose.
+   Clipping body keeps it from adding a sideways scroll or an extra blurry
+   strip below the page. html needs a clip too: without it, the browser hands
+   body's overflow setting to the window instead of applying it to body. */
+html {
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  position: relative;
+  overflow: clip;
+
+  /* Photo settings, inherited by the ::before / ::after layers below.
+     Home: in the creek. Boots sit 58.75% down the photo (940px of 1600px)
+     and land just above the first sign, which starts at 82svh (#hero). */
+  --photo: url('./assets/InCreek.jpg');
+  --ratio: 0.75; /* photo width / height (1200x1600) */
+  --photo-h: max(133.34vw, 140svh); /* fills the width */
+  --anchor: 0.5875;
+  --anchor-at: 80svh;
+  --fill: #1b2333; /* creek water, if the page runs past the photo */
+  /* How far to slide the photo left (as a fraction of its width) when it is
+     wider than the screen, for photos where you're off-centre. */
+  --shift: 0;
+}
+
+/* Pages behind the signs: you land just above the text card, which starts at
+   76svh (.trail-hero in App.css). */
+body[data-page='about'] {
+  /* Climbing up the mountain: boots 53.5% down the photo. */
+  --photo: url('./assets/UpMountain.jpg');
+  --ratio: 0.753; /* 3072x4080 */
+  --photo-h: max(132.9vw, 150svh);
+  --anchor: 0.535;
+  --anchor-at: 72svh;
+  --fill: #eef1f6; /* snow */
+}
+
+body[data-page='projects'] {
+  /* Sitting in the ice cave: boots 71% down the photo. You take up a lot of
+     this photo, so on wide screens its height is capped to keep your head
+     below the title, with the blurred side fill beside it. */
+  --photo: url('./assets/InIceCave.jpg');
+  --ratio: 0.75; /* 1200x1600 */
+  --photo-h: clamp(110svh, 133.34vw, 155svh);
+  --anchor: 0.71;
+  --anchor-at: 72svh;
+  --fill: #e4ecf1; /* snow */
+}
+
+body[data-page='experience'] {
+  /* Skiing through the ice cave: ski tails 62% down the photo. This photo is
+     tall and narrow, so filling a wide screen would zoom in until your head is
+     cut off. Instead its height is capped so all of you fits on screen, and
+     the blurred side fill (body::after) covers the rest of the width. */
+  --photo: url('./assets/SkiingIceCave.jpg');
+  --ratio: 0.572; /* 915x1600 */
+  --photo-h: 120svh; /* tall enough to reach the bottom of the screen */
+  --anchor: 0.62;
+  --anchor-at: 55svh; /* just above the carousel; see experience.css */
+  --fill: #4c5a63; /* cave ice */
+  --shift: 0.12; /* you're right of centre */
+}
+
+/* Photo behind the whole page that scrolls with it. Instead of a plain
+   `cover`, each photo is placed so a chosen point (where you're standing)
+   lands at a fixed spot on screen, just above the page content. That keeps
+   you visible at any screen size. A soft scrim at the top keeps the heading
+   readable. Each page picks its photo via body[data-page], set in router.ts. */
+body::before {
+  --photo-w: calc(var(--photo-h) * var(--ratio));
+
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--bg) 70%, transparent) 0,
+      color-mix(in srgb, var(--bg) 20%, transparent) 30svh,
+      transparent 50svh
+    ),
+    var(--photo) no-repeat
+      /* x: centred, then slid left by --shift, but never so far that the
+         right edge comes on-screen (-50% here is the overflow on each side) */
+      calc(50% - max(0px, min(var(--photo-w) * var(--shift), -50%)))
+      calc(var(--anchor-at) - var(--anchor) * var(--photo-h)) /
+      auto var(--photo-h),
+    var(--fill);
+  /* If the photo is narrower than the screen, fade its left and right edges
+     into the blurred fill (body::after). --gap is the empty space on each
+     side; when the photo fills the width it is 0 and nothing is faded. */
+  --gap: max(0px, (100% - var(--photo-w)) / 2);
+  --fade: min(100px, var(--gap) * 1000);
+  mask-image: linear-gradient(
+    90deg,
+    transparent var(--gap),
+    #000 calc(var(--gap) + var(--fade)),
+    #000 calc(100% - var(--gap) - var(--fade)),
+    transparent calc(100% - var(--gap))
+  );
+}
+
+/* Blurred, stretched copy of the photo, only visible beside a photo that is
+   narrower than the screen. It uses the same height and vertical position as
+   the sharp photo, so it doesn't move when the page gets taller or shorter
+   (e.g. when an experience card flips open). It's stretched to full width;
+   under this much blur the stretch doesn't show. The +60px makes up for the
+   -60px inset, which keeps the blur's soft edges off-screen. */
+body::after {
+  content: '';
+  position: absolute;
+  inset: -60px;
+  z-index: -2;
+  background:
+    var(--photo) no-repeat
+      center calc(var(--anchor-at) - var(--anchor) * var(--photo-h) + 60px) /
+      100% var(--photo-h),
+    var(--fill);
+  filter: blur(40px) brightness(0.9);
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}

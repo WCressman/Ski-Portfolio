@@ -1,0 +1,373 @@
+/* The title sits near the top, and the space under it stretches to fill
+   whatever the category polaroids don't need. That keeps the polaroids
+   resting on the bottom edge of the screen (no scrolling, no strip below the
+   photo) with you in the gap above them. #root is a full-height flex column,
+   which is what lets this grow. */
+body[data-page='experience'] .trail-hero {
+  flex: 1 0 auto;
+  min-height: 0;
+  padding-top: 3svh;
+
+  /* A category is open: the gap closes and the carousel moves up under the
+     title. */
+  &.trail-hero--compact {
+    flex-grow: 0;
+  }
+
+  /* Narrower screens: the centred title would run into the return home skis
+     in the top-left corner, so it starts just below them. */
+  @media (max-width: 900px) {
+    padding-top: 56px;
+  }
+}
+
+/* Switching between the picker and a category: the old view fades out, the
+   layout changes while nothing is visible, and the new view fades in. */
+.xp-fade {
+  /* backwards, not both: once the fade-in ends it lets go of opacity, so the
+     fade-out transition below can run */
+  animation: xp-fade-in 0.3s ease backwards;
+  transition: opacity 0.2s ease; /* matches FADE_MS in Experience.tsx */
+
+  &.is-leaving {
+    opacity: 0;
+  }
+
+  /* A category is open: take up the rest of the screen below the title and
+     centre the carousel in it, rather than squeezing it up under the title. */
+  &.xp-fade--category {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 12px;
+  }
+}
+
+/* ---------- Category picker: two polaroids side by side ---------- */
+
+.xp-picker {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(16px, 6vw, 72px);
+  padding: 8px 16px 24px;
+}
+
+.xp-choice {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  /* side by side even on phones, so they don't stack into a tall column */
+  width: min(260px, calc(50vw - 28px));
+  font-size: clamp(11px, 3.4vw, 15px);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-6px) scale(1.03);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 8px;
+  }
+}
+
+/* ---------- Category view: carousel + details ---------- */
+
+.xp-view {
+  width: min(900px, 100%);
+  margin: 0 auto;
+  padding: 0 16px 16px;
+  box-sizing: border-box;
+}
+
+/* Small handwritten paper tag, in the same style as the polaroids. */
+.xp-back {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto 12px;
+  padding: 2px 14px 4px;
+  rotate: -2deg;
+  font: 600 22px/1.2 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+  color: #24211d;
+  background: #fbfaf6;
+  border-radius: 2px;
+  transition: rotate 0.15s ease;
+
+  &:hover {
+    rotate: 0deg;
+  }
+
+  &:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+  }
+}
+
+/* Arrows beside the photos on wide screens; underneath on phones. */
+.xp-carousel {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    'prev track next'
+    '.    count .';
+  align-items: center;
+  gap: 12px 8px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      'track track track'
+      'prev  count next';
+  }
+}
+
+.xp-track {
+  grid-area: track;
+  display: grid;
+  justify-items: center;
+  /* side photos poke out past the track; keep them from widening the page */
+  overflow: clip;
+  overflow-clip-margin: 24px;
+  padding: 24px 0;
+}
+
+/* Every slide sits in the same grid cell; --offset (position relative to the
+   current one) slides it left or right. */
+.xp-slide {
+  grid-area: 1 / 1;
+  width: min(280px, 68vw);
+  font-size: 16px;
+  transition:
+    transform 0.4s ease,
+    opacity 0.4s ease;
+
+  &.xp-slide--current {
+    z-index: 2;
+  }
+
+  &.xp-slide--neighbour {
+    z-index: 1;
+    opacity: 0.85;
+    transform: translateX(calc(var(--offset) * 78%)) scale(0.72)
+      rotate(calc(var(--offset) * 5deg));
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &.xp-slide--hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(calc(var(--offset) * 60%)) scale(0.6);
+  }
+}
+
+/* While the details card is open it has its own arrows and hint, so the
+   page's ones step aside instead of showing through underneath. */
+.xp-carousel.is-open {
+  .xp-arrow,
+  .xp-hint {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+/* The current polaroid; clicking it opens the details card. */
+.xp-card {
+  cursor: pointer;
+  rotate: var(--card-tilt);
+
+  &:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 6px;
+  }
+}
+
+/* ---------- Details card, centred over the page ---------- */
+
+.xp-detail {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+}
+
+.xp-detail__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 16, 22, 0.6);
+}
+
+.xp-detail__stage {
+  /* As big as fits: at most 440px wide, and short enough that the card plus
+     the arrows below it fit on screen without scrolling. */
+  --card-w: min(440px, calc(100vw - 32px), calc((100svh - 110px) / 1.22));
+
+  position: relative; /* above the backdrop */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.xp-detail__card {
+  width: var(--card-w);
+  /* Same proportions as the 280px carousel polaroid (16px text), so the front
+     matches it exactly while the card lifts out. */
+  font-size: calc(var(--card-w) * 16 / 280);
+  perspective: 2000px;
+  cursor: pointer;
+  outline: none;
+}
+
+.xp-detail__inner {
+  position: relative;
+  display: grid;
+  transform-style: preserve-3d;
+  transform: rotateY(180deg); /* resting state: back facing you */
+}
+
+.xp-detail__face {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+}
+
+/* The back is exactly the size of the front polaroid; long text scrolls
+   inside it rather than making the card bigger. */
+.xp-detail__back {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  transform: rotateY(180deg);
+  box-sizing: border-box;
+  padding: 26px 28px 20px;
+  background: #fbfaf6;
+  border-radius: 2px;
+  color: #24211d;
+  font-size: 15px;
+  line-height: 1.45;
+  text-align: left;
+
+  @media (max-width: 480px) {
+    padding: 20px 20px 16px;
+    font-size: 14px;
+  }
+}
+
+.xp-detail__org {
+  margin: 0;
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #24211d;
+}
+
+.xp-detail__role {
+  margin: 8px 0 0;
+  font-weight: 600;
+}
+
+.xp-detail__meta {
+  margin: 2px 0 14px;
+  color: #6b655b;
+}
+
+.xp-detail__points {
+  margin: 0;
+  padding-left: 1.1em;
+
+  li + li {
+    margin-top: 6px;
+  }
+}
+
+.xp-detail__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: var(--card-w);
+  animation: xp-fade-in 0.3s 0.6s both; /* once the card has mostly turned */
+}
+
+@keyframes xp-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.xp-arrow {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font: 22px/1 var(--sans);
+  color: var(--text-h);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(6px);
+  /* visibility switches at the end of a fade-out and the start of a fade-in,
+     so hidden arrows can't be clicked but still animate */
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease,
+    visibility 0.25s;
+
+  &.xp-arrow--prev {
+    grid-area: prev;
+  }
+  &.xp-arrow--next {
+    grid-area: next;
+  }
+
+  &:hover:not([hidden]) {
+    transform: scale(1.08);
+  }
+
+  /* At the first experience there's nowhere to go back to. Hidden, but it
+     keeps its space so the photos don't shift sideways. */
+  &[hidden] {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+  }
+}
+
+.xp-hint {
+  grid-area: count;
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s;
+  justify-self: center;
+  margin: 0;
+  font: 15px var(--sans);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp-slide,
+  .xp-choice,
+  .xp-arrow {
+    transition: none;
+  }
+
+  .xp-detail__controls {
+    animation: none;
+  }
+}

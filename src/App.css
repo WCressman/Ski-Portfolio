@@ -1,0 +1,288 @@
+.counter {
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  margin-bottom: 24px;
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.hero {
+  position: relative;
+
+  .base,
+  .framework,
+  .vite {
+    inset-inline: 0;
+    margin: 0 auto;
+  }
+
+  .base {
+    width: 170px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .framework,
+  .vite {
+    position: absolute;
+  }
+
+  .framework {
+    z-index: 1;
+    top: 34px;
+    height: 28px;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
+      scale(1.4);
+  }
+
+  .vite {
+    z-index: 0;
+    top: 107px;
+    height: 26px;
+    width: auto;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
+      scale(0.8);
+  }
+}
+
+/* First screen: heading over the photo. It stops a little short of the
+   viewport bottom so the top of the first sign peeks in and invites a scroll. */
+#hero {
+  min-height: 82svh; /* unchanged, so the signs stay where they are */
+  padding: 3svh 20px 0; /* title sits high, leaving you the middle */
+  box-sizing: border-box;
+}
+
+#trails {
+  padding: 0 16px 40px;
+}
+
+#next-steps {
+  display: flex;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  & > div {
+    flex: 1 1 0;
+    padding: 32px;
+    @media (max-width: 1024px) {
+      padding: 24px 20px;
+    }
+  }
+
+  .icon {
+    margin-bottom: 16px;
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+#docs {
+  border-right: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+#next-steps ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  margin: 32px 0 0;
+
+  .logo {
+    height: 18px;
+  }
+
+  a {
+    color: var(--text-h);
+    font-size: 16px;
+    border-radius: 6px;
+    background: var(--social-bg);
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+    .button-icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+      flex: 1 1 calc(50% - 8px);
+    }
+
+    a {
+      width: 100%;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+  }
+}
+
+#spacer {
+  height: 88px;
+  border-top: 1px solid var(--border);
+  @media (max-width: 1024px) {
+    height: 48px;
+  }
+}
+
+.ticks {
+  position: relative;
+  width: 100%;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    border: 5px solid transparent;
+  }
+
+  &::before {
+    left: 0;
+    border-left-color: var(--border);
+  }
+  &::after {
+    right: 0;
+    border-right-color: var(--border);
+  }
+}
+
+/* ---------- Pages behind each sign (TrailPage.tsx) ---------- */
+
+.page-nav {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1;
+}
+
+/* Two skis (assets/ReturnHome.webp, tips pointing left) with the label
+   laid over them. */
+.return-home {
+  /* reset default <button> styling */
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 280px;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Fills the ski image and centres the label in it. line-height: 1 drops
+     the extra space the page's default 145% line height adds, which was
+     pushing the text off-centre. */
+  span {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    /* "return home" has no letters that hang below the line, so the box's
+       centre sits below the letters' visual centre. Nudge it up to match. */
+    translate: 0 -0.14em;
+    font-family: var(--sans);
+    font-size: 24px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #fff;
+    /* soft shadow so the label reads over the busy ski graphics */
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  &:hover {
+    transform: translateX(-4px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 480px) {
+    width: 200px;
+
+    span {
+      font-size: 18px;
+    }
+  }
+}
+
+/* Heading at the top; the empty space below shows you climbing. */
+.trail-hero {
+  min-height: 76svh; /* unchanged, so the text card and photo stay put */
+  padding: 3svh 20px 0; /* title sits near the top */
+  box-sizing: border-box;
+
+  /* Narrower screens: the centred title would run into the return home skis
+     in the top-left corner, so it starts just below them. */
+  @media (max-width: 900px) {
+    padding-top: 56px;
+  }
+}
+
+.trail-card {
+  width: min(640px, calc(100% - 32px));
+  margin: 0 auto 64px;
+  padding: 28px 32px;
+  box-sizing: border-box;
+  text-align: left;
+  color: var(--text-h);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+
+  p + p {
+    margin-top: 1em;
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px;
+  }
+}
