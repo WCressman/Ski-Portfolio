@@ -266,6 +266,11 @@
   }
 }
 
+/* Pages whose content should sit right under the title (TrailPage compact). */
+.trail-hero.trail-hero--compact {
+  min-height: 0;
+}
+
 .trail-card {
   width: min(640px, calc(100% - 32px));
   margin: 0 auto 64px;

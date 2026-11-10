@@ -77,12 +77,14 @@ body {
   /* Photo settings, inherited by the ::before / ::after layers below.
      Home: in the creek. Boots sit 58.75% down the photo (940px of 1600px)
      and land just above the first sign, which starts at 82svh (#hero). */
-  --photo: url('./assets/InCreek.jpg');
+  --photo: url('./assets/Background Photos/InCreek.jpg');
   --ratio: 0.75; /* photo width / height (1200x1600) */
   --photo-h: max(133.34vw, 140svh); /* fills the width */
   --anchor: 0.5875;
   --anchor-at: 80svh;
   --fill: #1b2333; /* creek water, if the page runs past the photo */
+  /* Even wash over the whole photo, for pages where text sits on top of it. */
+  --veil: transparent;
   /* How far to slide the photo left (as a fraction of its width) when it is
      wider than the screen, for photos where you're off-centre. */
   --shift: 0;
@@ -92,7 +94,7 @@ body {
    76svh (.trail-hero in App.css). */
 body[data-page='about'] {
   /* Climbing up the mountain: boots 53.5% down the photo. */
-  --photo: url('./assets/UpMountain.jpg');
+  --photo: url('./assets/Background Photos/UpMountain.jpg');
   --ratio: 0.753; /* 3072x4080 */
   --photo-h: max(132.9vw, 150svh);
   --anchor: 0.535;
@@ -104,12 +106,15 @@ body[data-page='projects'] {
   /* Sitting in the ice cave: boots 71% down the photo. You take up a lot of
      this photo, so on wide screens its height is capped to keep your head
      below the title, with the blurred side fill beside it. */
-  --photo: url('./assets/InIceCave.jpg');
+  --photo: url('./assets/Background Photos/InIceCave.jpg');
   --ratio: 0.75; /* 1200x1600 */
   --photo-h: clamp(110svh, 133.34vw, 155svh);
   --anchor: 0.71;
   --anchor-at: 72svh;
   --fill: #e4ecf1; /* snow */
+  /* The project names and details sit straight on the photo with no box, so
+     it's softened enough for dark text to read over you and the ice. */
+  --veil: rgba(244, 247, 250, 0.62);
 }
 
 body[data-page='experience'] {
@@ -117,7 +122,7 @@ body[data-page='experience'] {
      tall and narrow, so filling a wide screen would zoom in until your head is
      cut off. Instead its height is capped so all of you fits on screen, and
      the blurred side fill (body::after) covers the rest of the width. */
-  --photo: url('./assets/SkiingIceCave.jpg');
+  --photo: url('./assets/Background Photos/SkiingIceCave.jpg');
   --ratio: 0.572; /* 915x1600 */
   --photo-h: 120svh; /* tall enough to reach the bottom of the screen */
   --anchor: 0.62;
@@ -139,6 +144,7 @@ body::before {
   inset: 0;
   z-index: -1;
   background:
+    linear-gradient(var(--veil), var(--veil)),
     linear-gradient(
       180deg,
       color-mix(in srgb, var(--bg) 70%, transparent) 0,
@@ -178,6 +184,7 @@ body::after {
   inset: -60px;
   z-index: -2;
   background:
+    linear-gradient(var(--veil), var(--veil)),
     var(--photo) no-repeat
       center calc(var(--anchor-at) - var(--anchor) * var(--photo-h) + 60px) /
       100% var(--photo-h),

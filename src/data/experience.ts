@@ -2,13 +2,13 @@
 // category's list is in order of importance: the first entry is the one shown
 // when the category is opened.
 
-import technicalWork from '../assets/TechnicalWork.jpeg'
-import inCreek from '../assets/InCreek.jpg'
-import cienaLogo from '../assets/ciena logo.webp'
-import unLogo from '../assets/UN Logo.png'
-import lyceeLogo from '../assets/Lycee Claudel Logo.webp'
-import smsLogo from '../assets/SwissMountainSportsMark.webp'
-import campFortuneLogo from '../assets/Camp Fortune Logo.svg'
+import technicalWork from '../assets/Experience Polaroid Photos/TechnicalWork.jpeg'
+import skiInstructor from '../assets/Experience Polaroid Photos/SkiInstuctor.jpg'
+import cienaLogo from '../assets/Company Logos/ciena logo.webp'
+import unLogo from '../assets/Company Logos/UN Logo.png'
+import lyceeLogo from '../assets/Company Logos/Lycee Claudel Logo.webp'
+import smsLogo from '../assets/Company Logos/SwissMountainSportsMark.webp'
+import campFortuneLogo from '../assets/Company Logos/Camp Fortune Logo.svg'
 
 export type Experience = {
   /** Big handwritten text on the front of the polaroid. */
@@ -37,10 +37,6 @@ export type Category = {
   tint: string
   experiences: Experience[]
 }
-
-const lessons =
-  'Taught lessons in English and French to clients of all ages and skill levels, on groomers, off-piste and in the terrain park'
-const lessonTotal = 'Part of 500+ lessons taught across Swiss Mountain Sports and Camp Fortune'
 
 export const categories: Category[] = [
   {
@@ -94,7 +90,7 @@ export const categories: Category[] = [
     id: 'ski',
     label: 'ski instructor',
     blurb: '3 winters of teaching',
-    photo: inCreek,
+    photo: skiInstructor,
     tint: '#2d4a36',
     experiences: [
       {
@@ -104,7 +100,10 @@ export const categories: Category[] = [
         dates: 'Dec. 2025 - Apr. 2026',
         logo: smsLogo,
         tint: '#000000',
-        points: [lessons, lessonTotal],
+        points: [
+          'Taught 500+ lessons in English and French to clients of all ages and skill levels on groomers, off-piste and in the terrain park',
+          'CSIA Level 2, Standard First Aid + CPR',
+          'Bilingual ski instructor teaching lessons to skiers of all ages and abilities'],
       },
       {
         org: 'Camp Fortune',
@@ -113,8 +112,12 @@ export const categories: Category[] = [
         dates: 'Dec. 2023 - May. 2025',
         logo: campFortuneLogo,
         tint: '#ffffff',
-        points: [lessons, lessonTotal],
+        points: [
+          'Planned and taught over a hundred lessons to kids aged 7 through 14 in both English and French',
+          'Coached kids of all skill levels to refine their technique on groomers and off-piste while increasing their safety awareness in the terrain park',
+          'Bilingual ski instructor teaching lessons to kids of all skill levels and abilities'],
       },
     ],
   },
 ]
+
