@@ -1,0 +1,92 @@
+/* Contact: a single sheet of paper, slightly tilted like the polaroids,
+   with two links on it. */
+
+/* Fills the screen under the title and drops the card to the bottom, so it
+   is always fully on screen with the skiers above it. */
+.ct-view {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px 0 7svh;
+}
+
+.ct-card {
+  width: min(380px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 26px 30px 30px;
+  box-sizing: border-box;
+  background: #fbfaf6; /* same paper as the polaroids */
+  border-radius: 2px;
+  rotate: -1.5deg;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.12),
+    0 12px 28px -8px rgba(0, 0, 0, 0.3);
+  color: #24211d;
+}
+
+.ct-card__heading {
+  margin: 0 0 16px;
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+  font-size: 38px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: #24211d;
+}
+
+.ct-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    border: 1px solid rgba(36, 33, 29, 0.15);
+    border-radius: 10px;
+    text-align: left;
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+
+    &:hover {
+      border-color: #d9541e;
+      background: rgba(217, 84, 30, 0.06);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #24211d;
+      outline-offset: 2px;
+    }
+  }
+
+  svg {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: #d9541e; /* the orange of the ski jacket */
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+.ct-links__label {
+  display: block;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.ct-links__value {
+  display: block;
+  font-size: 15px;
+  color: #5b554c;
+  overflow-wrap: anywhere;
+}
