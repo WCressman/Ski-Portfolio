@@ -190,6 +190,11 @@
   z-index: 1;
 }
 
+.page-nav.page-nav--fixed {
+  position: fixed;
+  z-index: 10;
+}
+
 /* Two skis (assets/ReturnHome.webp, tips pointing left) with the label
    laid over them. */
 .return-home {
@@ -223,16 +228,20 @@
     align-items: center;
     justify-content: center;
     line-height: 1;
-    /* "return home" has no letters that hang below the line, so the box's
-       centre sits below the letters' visual centre. Nudge it up to match. */
-    translate: 0 -0.14em;
-    font-family: var(--sans);
-    font-size: 24px;
-    font-weight: 600;
+    /* Nudge up so "return home" sits visually centred on the skis. */
+    translate: 0 -0.1em;
+    /* Handwritten like the page titles, as if written on the skis in
+       marker. Dark ink reads on the white Whitewalker topsheets; a faint
+       white glow keeps it clear over the darker graphics near the tails. */
+    font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+    font-size: 34px;
+    /* Caveat's heaviest weight, thickened further with a thin outline in
+       the same ink so the label is easy to spot. */
+    font-weight: 700;
+    -webkit-text-stroke: 0.8px #24211d;
     white-space: nowrap;
-    color: #fff;
-    /* soft shadow so the label reads over the busy ski graphics */
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    color: #24211d;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
   }
 
   &:hover {
@@ -248,7 +257,8 @@
     width: 200px;
 
     span {
-      font-size: 18px;
+      font-size: 26px;
+      -webkit-text-stroke-width: 0.6px;
     }
   }
 }

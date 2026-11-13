@@ -120,7 +120,9 @@
   text-align: center;
 }
 
-/* Arrows beside the selected icon, level with its middle. */
+/* Arrows beside the selected icon, level with its middle: just a thin
+   chevron, no disc, so they read as part of the page rather than buttons
+   dropped on top of it. */
 .pj-arrow {
   position: absolute;
   z-index: 3;
@@ -128,30 +130,50 @@
   translate: 0 -50%;
   appearance: none;
   border: 0;
+  padding: 0;
+  background: none;
   cursor: pointer;
+  display: grid;
+  place-items: center;
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  font: 22px/1 var(--sans);
-  color: #24211d;
-  background: color-mix(in srgb, #fff 70%, transparent);
-  transition: transform 0.15s ease;
+  color: rgba(36, 33, 29, 0.55);
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+
+  svg {
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 
   &.pj-arrow--prev {
-    left: calc(50% - var(--icon) / 2 - 64px);
+    left: calc(50% - var(--icon) / 2 - 60px);
   }
 
   &.pj-arrow--next {
-    right: calc(50% - var(--icon) / 2 - 64px);
+    right: calc(50% - var(--icon) / 2 - 60px);
   }
 
   &:hover {
-    transform: scale(1.08);
+    color: #24211d;
+  }
+  &.pj-arrow--prev:hover {
+    transform: translateX(-3px);
+  }
+  &.pj-arrow--next:hover {
+    transform: translateX(3px);
   }
 
   &:focus-visible {
-    outline: 3px solid #24211d;
-    outline-offset: 3px;
+    outline: 2px solid #24211d;
+    outline-offset: 2px;
   }
 }
 
@@ -222,11 +244,42 @@
   color: #24211d;
 }
 
+/* Proof link (channel, maps page): a small outlined pill. */
 .pj-detail__link {
-  display: inline-block;
-  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 6px 14px;
+  border: 1.5px solid #d9541e;
+  border-radius: 999px;
+  font-size: 15px;
   font-weight: 600;
+  text-decoration: none;
   color: #d9541e;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &:hover {
+    background: #d9541e;
+    color: #fff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #24211d;
+    outline-offset: 3px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

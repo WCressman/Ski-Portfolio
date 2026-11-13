@@ -12,7 +12,7 @@ export function Home() {
           <SkiSign difficulty="green" onClick={() => navigate('about')}>the ski journey</SkiSign>
           <SkiSign difficulty="blue" onClick={() => navigate('projects')}>projects</SkiSign>
           <SkiSign difficulty="black" onClick={() => navigate('experience')}>work experience</SkiSign>
-          <SkiSign difficulty="double-black">contact</SkiSign>
+          <SkiSign difficulty="double-black" onClick={() => navigate('contact')}>chairlift chat</SkiSign>
         </SkiSignPost>
       </section>
     </>

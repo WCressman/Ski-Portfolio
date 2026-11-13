@@ -77,7 +77,7 @@ body {
   /* Photo settings, inherited by the ::before / ::after layers below.
      Home: in the creek. Boots sit 58.75% down the photo (940px of 1600px)
      and land just above the first sign, which starts at 82svh (#hero). */
-  --photo: url('./assets/Background Photos/InCreek.jpg');
+  --photo: url('./assets/Background Photos/InCreek.webp');
   --ratio: 0.75; /* photo width / height (1200x1600) */
   --photo-h: max(133.34vw, 140svh); /* fills the width */
   --anchor: 0.5875;
@@ -94,7 +94,7 @@ body {
    76svh (.trail-hero in App.css). */
 body[data-page='about'] {
   /* Climbing up the mountain: boots 53.5% down the photo. */
-  --photo: url('./assets/Background Photos/UpMountain.jpg');
+  --photo: url('./assets/Background Photos/UpMountain.webp');
   --ratio: 0.753; /* 3072x4080 */
   --photo-h: max(132.9vw, 150svh);
   --anchor: 0.535;
@@ -102,11 +102,19 @@ body[data-page='about'] {
   --fill: #eef1f6; /* snow */
 }
 
+/* The ski journey pins itself to the screen while you scroll (see
+   SkiJourney.tsx), so the photo is pinned too: otherwise it would slide away
+   behind the trail and the page would look like it was moving. */
+body[data-page='about']::before,
+body[data-page='about']::after {
+  position: fixed;
+}
+
 body[data-page='projects'] {
   /* Sitting in the ice cave: boots 71% down the photo. You take up a lot of
      this photo, so on wide screens its height is capped to keep your head
      below the title, with the blurred side fill beside it. */
-  --photo: url('./assets/Background Photos/InIceCave.jpg');
+  --photo: url('./assets/Background Photos/InIceCave.webp');
   --ratio: 0.75; /* 1200x1600 */
   --photo-h: clamp(110svh, 133.34vw, 155svh);
   --anchor: 0.71;
@@ -122,13 +130,24 @@ body[data-page='experience'] {
      tall and narrow, so filling a wide screen would zoom in until your head is
      cut off. Instead its height is capped so all of you fits on screen, and
      the blurred side fill (body::after) covers the rest of the width. */
-  --photo: url('./assets/Background Photos/SkiingIceCave.jpg');
+  --photo: url('./assets/Background Photos/SkiingIceCave.webp');
   --ratio: 0.572; /* 915x1600 */
   --photo-h: 120svh; /* tall enough to reach the bottom of the screen */
   --anchor: 0.62;
   --anchor-at: 55svh; /* just above the carousel; see experience.css */
   --fill: #4c5a63; /* cave ice */
   --shift: 0.12; /* you're right of centre */
+}
+
+body[data-page='contact'] {
+  /* On the forest trail: the skier's boots are 60% down the photo, landing
+     above the paper card, which sits at the bottom of the screen (contact.css). */
+  --photo: url('./assets/Background Photos/InForest.webp');
+  --ratio: 0.75; /* 1200x1600 */
+  --photo-h: max(133.34vw, 140svh);
+  --anchor: 0.6;
+  --anchor-at: 46svh;
+  --fill: #eef0f2; /* snow */
 }
 
 /* Photo behind the whole page that scrolls with it. Instead of a plain
@@ -199,12 +218,17 @@ h2 {
   color: var(--text-h);
 }
 
+/* Page titles: handwritten, like the polaroid captions. Caveat runs small
+   for its size, so it is set a little larger than a sans would be. */
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0;
   margin: 32px 0;
   @media (max-width: 1024px) {
-    font-size: 36px;
+    font-size: 44px;
     margin: 20px 0;
   }
 }

@@ -1,6 +1,6 @@
 import { useEffect, useSyncExternalStore } from 'react'
 
-export type Route = 'home' | 'about' | 'projects' | 'experience'
+export type Route = 'home' | 'about' | 'projects' | 'experience' | 'contact'
 
 /** The clean URL shown for each page, e.g. yoursite.com/about. */
 const paths: Record<Route, string> = {
@@ -8,6 +8,7 @@ const paths: Record<Route, string> = {
   about: '/about',
   projects: '/projects',
   experience: '/experience',
+  contact: '/contact',
 }
 
 /** Fired whenever navigate() changes the page, so useRoute() re-renders. */

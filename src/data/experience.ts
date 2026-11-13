@@ -2,8 +2,8 @@
 // category's list is in order of importance: the first entry is the one shown
 // when the category is opened.
 
-import technicalWork from '../assets/Experience Polaroid Photos/TechnicalWork.jpeg'
-import skiInstructor from '../assets/Experience Polaroid Photos/SkiInstuctor.jpg'
+import technicalWork from '../assets/Experience Polaroid Photos/TechnicalWork.webp'
+import skiInstructor from '../assets/Experience Polaroid Photos/SkiInstuctor.webp'
 import cienaLogo from '../assets/Company Logos/ciena logo.webp'
 import unLogo from '../assets/Company Logos/UN Logo.png'
 import lyceeLogo from '../assets/Company Logos/Lycee Claudel Logo.webp'
@@ -77,11 +77,12 @@ export const categories: Category[] = [
         org: 'Lycée Claudel',
         role: 'Math & Computer Science Tutor',
         location: 'Ottawa, Canada',
-        dates: 'Dec. 2024 – Present',
+        dates: 'Dec. 2024 – Oct. 2026',
         logo: lyceeLogo,
         tint: '#ffffff',
         points: [
-          'Weekly sessions tutoring high schoolers in fundamental concepts of both math and computer science',
+          'Weekly sessions tutoring high schoolers fundamental concepts in both math and computer science in French',
+          'Taught dozens of sessions covering topics from calculus and probability to recursion, data structures, Python and MySQL'
         ],
       },
     ],
@@ -113,7 +114,7 @@ export const categories: Category[] = [
         logo: campFortuneLogo,
         tint: '#ffffff',
         points: [
-          'Planned and taught over a hundred lessons to kids aged 7 through 14 in both English and French',
+          'Planned and taught 100+ lessons to kids aged 7 through 14 in both English and French',
           'Coached kids of all skill levels to refine their technique on groomers and off-piste while increasing their safety awareness in the terrain park',
           'Bilingual ski instructor teaching lessons to kids of all skill levels and abilities'],
       },

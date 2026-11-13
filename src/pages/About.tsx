@@ -1,16 +1,6 @@
-import { TrailPage } from './TrailPage'
+import { SkiJourney } from './SkiJourney'
 
+/** "the ski journey" page. The photos and captions live in data/skiJourney.ts. */
 export function About() {
-  return (
-    <TrailPage title="the ski journey">
-      {/* Placeholder copy: replace with your own story. */}
-      <p>
-        Double Degree student at Waterloo and Wilfrid Laurier
-      </p>
-      <p>
-        Then the fun part: how you got into skiing, favourite mountains, the
-        trip in these photos, and what you're chasing next.
-      </p>
-    </TrailPage>
-  )
+  return <SkiJourney />
 }

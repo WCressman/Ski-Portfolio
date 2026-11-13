@@ -92,7 +92,7 @@ export function Projects() {
             onClick={() => step(-1)}
             aria-label="Previous project"
           >
-            ←
+            <Chevron dir="left" />
           </button>
           <button
             type="button"
@@ -100,7 +100,7 @@ export function Projects() {
             onClick={() => step(1)}
             aria-label="Next project"
           >
-            →
+            <Chevron dir="right" />
           </button>
         </div>
 
@@ -138,7 +138,10 @@ export function Projects() {
                   rel="noreferrer"
                   tabIndex={k === selected ? 0 : -1}
                 >
-                  {p.link.label} ↗
+                  {p.link.label}
+                  <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M5 11 11 5M6 5h5v5" />
+                  </svg>
                 </a>
               )}
             </article>
@@ -167,5 +170,14 @@ function Icon({ project }: { project: Project }) {
     <span className="pj-icon pj-icon--placeholder" style={{ background: project.tint }}>
       {initials}
     </span>
+  )
+}
+
+/** A thin chevron for the gallery arrows. */
+function Chevron({ dir }: { dir: 'left' | 'right' }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d={dir === 'left' ? 'M15 5 8 12l7 7' : 'm9 5 7 7-7 7'} />
+    </svg>
   )
 }

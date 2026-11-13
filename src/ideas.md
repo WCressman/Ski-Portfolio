@@ -14,3 +14,12 @@ WEB GAMES <-- **SELECTED** --> YOUTUBE MINECRAFT
 * IDEA: projects rotate on a conveyer belt, ski chairlifts are like conveyor belts,
 so we could have a ski chairlift conveyer belt to "cycle" through the projects, and the rider
 of the chairlift is the project
+
+skiing timeline
+* level 1 ski instructor with my best friend, grade 10
+* 2 years of teaching and instructing at the hill i grew up skiing on, grade 11-12
+
+what's next? I want to keep improving my abilities to ski in the backcountry and hopefully one day become a fully certified helicopter ski instructor,
+until then, happy shredding!
+
+--> alt landing page title: ski bum at core, double degree student on the side 
