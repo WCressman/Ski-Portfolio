@@ -55,8 +55,8 @@ export const categories: Category[] = [
         logo: cienaLogo,
         tint: '#ffffff',
         points: [
+          'Developed React-based devtools used by 500+ developers across multiple departments',
           'Created a form-based GUI that generated deployment configs in real time, letting developers configure 100+ microservices, YANG models, protocol ports (REST, ZMQ) and Git metadata, replacing error-prone hand-editing',
-          'Developed React-based devtools used by 30+ developers across multiple departments',
           'Integrated Bitbucket and Jenkins APIs into a React app for diagnostics on microservices',
           'Led monthly demos of new tooling to multiple engineering teams, using feedback to guide follow-up development',
         ],

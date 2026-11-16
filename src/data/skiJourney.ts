@@ -10,7 +10,7 @@ import firstBacky from '../assets/Ski Journey Photos/first backflips 0.0.webp'
 import swissSkiInstruction from '../assets/Ski Journey Photos/skiInstructingSwizterland.webp'
 import swissWaterfallSkiing from '../assets/Ski Journey Photos/skiing next to a waterfall.webp'
 import havingFun from '../assets/Ski Journey Photos/baby me ski.webp'
-import campfortuneInstructor from '../assets/Ski Journey Photos/skiInstructorLevel1.webp'
+import campfortuneInstructor from '../assets/Ski Journey Photos/camp fortune ski crew.jpeg'
 
 export type JourneyStop = {
   photo: string
