@@ -1,0 +1,3 @@
+# Cloudflare Pages: wcressman.com/resume shows the resume PDF on its own.
+# "200" serves the file without changing the address bar.
+/resume  /William-Cressman-Resume.pdf  200
