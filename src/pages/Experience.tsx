@@ -378,7 +378,10 @@ function DetailCard({ xp, tilt, source, canPrev, canNext, onPrev, onNext, onClos
           >
             ←
           </button>
-          <p className="xp-hint">click to close</p>
+          {/* Same as clicking the card or the backdrop: flips it back. */}
+          <button type="button" className="xp-hint" onClick={close}>
+            click to close
+          </button>
           <button
             type="button"
             className="xp-arrow"
