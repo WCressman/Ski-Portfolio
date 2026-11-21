@@ -14,11 +14,8 @@ import campfortuneInstructor from '../assets/Ski Journey Photos/camp fortune ski
 
 export type JourneyStop = {
   photo: string
-  /** Which part of the photo stays in the square crop (CSS object-position). */
   focus?: string
-  /** Big handwritten line under the photo. Keep it short (one line). */
   caption: string
-  /** Smaller line under it, e.g. an age or a year. */
   subcaption?: string
 }
 
