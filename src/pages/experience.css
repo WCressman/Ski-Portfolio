@@ -349,15 +349,32 @@ body[data-page='experience'] .trail-hero {
   }
 }
 
+/* Opens the details card, like clicking the polaroid. Looks like plain
+   hint text (the button's default styling is reset). */
 .xp-hint {
   grid-area: count;
-  transition:
-    opacity 0.25s ease,
-    visibility 0.25s;
   justify-self: center;
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
   margin: 0;
   font: 15px var(--sans);
   color: rgba(255, 255, 255, 0.75);
+  transition:
+    color 0.15s ease,
+    opacity 0.25s ease,
+    visibility 0.25s;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

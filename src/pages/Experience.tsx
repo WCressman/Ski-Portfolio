@@ -204,7 +204,10 @@ function CategoryView({ category, onBack }: { category: Category; onBack: () => 
           →
         </button>
 
-        <p className="xp-hint">click for more details</p>
+        {/* Same as clicking the polaroid: flips it over to the details. */}
+        <button type="button" className="xp-hint" onClick={() => setOpen(true)}>
+          click for more details
+        </button>
       </div>
 
       {open && (
